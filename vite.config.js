@@ -1,9 +1,11 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// When building for GitHub Pages the app is served from /camp-map-builder/.
-// In dev (and any other host) it's served from the root.
-export default defineConfig(({ command }) => ({
+// Base path is configurable so the same code deploys anywhere:
+//   - Root hosts (Vercel, Netlify, local dev/preview) -> "/"
+//   - GitHub Pages project site -> "/camp-map-builder/" (set via BASE_PATH
+//     in the Pages workflow).
+export default defineConfig(() => ({
   plugins: [react()],
-  base: command === 'build' ? '/camp-map-builder/' : '/',
+  base: process.env.BASE_PATH || '/',
 }))
